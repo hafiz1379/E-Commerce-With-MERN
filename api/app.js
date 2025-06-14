@@ -9,12 +9,6 @@ import cookieParser from "cookie-parser";
 import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoute.js";
 
-import path from "path";
-import { fileURLToPath } from "url";
-
-// Resolve the __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);  
-const __dirname = path.dirname(__filename);
 
 // Hanlde the uncaught exception errors
 process.on("uncaughtException", (err) => {
@@ -42,13 +36,7 @@ app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes);
 app.use("/api/v1", paymentRoutes);
 
-// Use the client app
-app.use(express.static(path.join(__dirname, "./client/dist")));
 
-// Render client app for any path 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/dist/index.html"));
-});
 
 // Middleware to handle errors
 app.use(errorMiddleware);
