@@ -2,8 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/v1' }),
-  tagTypes: ['Product', 'AdminProducts', 'Reviews'], // Ensure tag type is declared
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
+  }),
+  tagTypes: ['Product', 'AdminProducts', 'Reviews'],
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (params) => ({
@@ -25,12 +27,14 @@ export const productApi = createApi({
             ]
           : [{ type: 'Product', id: 'LIST' }],
     }),
+
     getProductDetails: builder.query({
       query: (id) => ({
         url: `/products/${id}`,
       }),
       providesTags: (result, error, id) => [{ type: 'Product', id }],
     }),
+
     submitReview: builder.mutation({
       query: (body) => ({
         url: '/reviews',
@@ -41,6 +45,7 @@ export const productApi = createApi({
         { type: 'Product', id: productId },
       ],
     }),
+
     canUserReview: builder.query({
       query: (productId) => ({
         url: `/can_review`,
@@ -50,10 +55,12 @@ export const productApi = createApi({
         { type: 'Product', id: productId },
       ],
     }),
+
     getAdminProducts: builder.query({
       query: () => `/admin/products`,
       providesTags: ['AdminProducts'],
     }),
+
     createProduct: builder.mutation({
       query(body) {
         return {
@@ -64,6 +71,7 @@ export const productApi = createApi({
       },
       invalidatesTags: ['AdminProducts'],
     }),
+
     updateProduct: builder.mutation({
       query({ id, body }) {
         return {
@@ -74,6 +82,7 @@ export const productApi = createApi({
       },
       invalidatesTags: ['Product', 'AdminProducts'],
     }),
+
     uploadProductImages: builder.mutation({
       query({ id, body }) {
         return {
@@ -84,6 +93,7 @@ export const productApi = createApi({
       },
       invalidatesTags: ['Product'],
     }),
+
     deleteProductImage: builder.mutation({
       query({ id, body }) {
         return {
@@ -94,6 +104,7 @@ export const productApi = createApi({
       },
       invalidatesTags: ['Product'],
     }),
+
     deleteProduct: builder.mutation({
       query(id) {
         return {
@@ -103,10 +114,12 @@ export const productApi = createApi({
       },
       invalidatesTags: ['AdminProducts'],
     }),
+
     getProductReviews: builder.query({
       query: (id) => `/reviews?id=${id}`,
       providesTags: ['Reviews'],
     }),
+
     deleteReview: builder.mutation({
       query: ({ id, productId }) => ({
         url: `/admin/reviews?productId=${productId}&id=${id}`,
@@ -118,6 +131,7 @@ export const productApi = createApi({
 });
 
 export default productApi;
+
 export const {
   useGetProductsQuery,
   useGetProductDetailsQuery,
