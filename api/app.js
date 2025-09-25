@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import process from "process";
-import cors from "cors"; // ✅ Import CORS
+import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
 import connectToDatabase from "./config/dbConnect.js";
 import errorMiddleware from "./middlewares/errors.js";
