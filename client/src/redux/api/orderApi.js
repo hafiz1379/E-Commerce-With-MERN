@@ -1,16 +1,17 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const orderApi = createApi({
-  reducerPath: "orderApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_API_URL}/api/v1`,
-    credentials: "include",
-  }),
-  tagTypes: ["Orders"],
+  reducerPath: 'orderApi',
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/v1' }),
+  tagTypes: ['Orders'],
   endpoints: (builder) => ({
     createNewOrder: builder.mutation({
       query(body) {
-        return { url: `/orders`, method: "POST", body };
+        return {
+          url: `/orders`,
+          method: 'POST',
+          body,
+        };
       },
     }),
     myOrders: builder.query({
@@ -18,12 +19,12 @@ export const orderApi = createApi({
     }),
     orderDetails: builder.query({
       query: (id) => `/orders/${id}`,
-      providesTags: ["Orders"],
+      providesTags: ['Orders'],
     }),
     stripeCheckoutSession: builder.mutation({
       query: (body) => ({
-        url: "/payments/checkout_stripe",
-        method: "POST",
+        url: '/payments/checkout_stripe',
+        method: 'POST',
         body,
       }),
     }),
@@ -33,17 +34,24 @@ export const orderApi = createApi({
     }),
     adminOrderList: builder.query({
       query: () => `/admin/orders`,
-      providesTags: ["Orders"],
+      providesTags: ['Orders'],
     }),
     updateOrder: builder.mutation({
       query({ body, id }) {
-        return { url: `/admin/orders/${id}`, method: "PUT", body };
+        return {
+          url: `/admin/orders/${id}`,
+          method: 'PUT',
+          body,
+        };
       },
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ['Orders'],
     }),
     deleteOrder: builder.mutation({
-      query: (id) => ({ url: `/admin/orders/${id}`, method: "DELETE" }),
-      invalidatesTags: ["Orders"],
+      query: (id) => ({
+        url: `/admin/orders/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Orders'],
     }),
   }),
 });

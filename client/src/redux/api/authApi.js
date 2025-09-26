@@ -3,14 +3,15 @@ import userApi from "./userApi";
 
 const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_API_URL}/api/v1`,
-    credentials: "include",
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/api/v1" }),
   endpoints: (builder) => ({
     register: builder.mutation({
       query(body) {
-        return { url: "/register", method: "POST", body };
+        return {
+          url: "/register",
+          method: "POST",
+          body,
+        };
       },
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         try {
@@ -23,7 +24,11 @@ const authApi = createApi({
     }),
     login: builder.mutation({
       query(body) {
-        return { url: "/login", method: "POST", body };
+        return {
+          url: "/login",
+          method: "POST",
+          body,
+        };
       },
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         try {
@@ -35,7 +40,10 @@ const authApi = createApi({
       },
     }),
     logout: builder.query({
-      query: () => ({ url: "/logout", method: "post" }),
+      query: () => ({
+        url: "/logout",
+        method: "post",
+      }),
     }),
   }),
 });
