@@ -36,7 +36,7 @@ app.use(cookieParser());
 // ✅ CORS configuration (multi-origin support)
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://e-commerce-front-rxj6.onrender.com/", 
+  "https://e-commerce-front-rxj6.onrender.com", 
 ];
 
 app.use(
