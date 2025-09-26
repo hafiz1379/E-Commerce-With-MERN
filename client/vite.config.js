@@ -10,7 +10,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: "https://e-commerce-back-4ahw.onrender.com/",
+          target: env.VITE_API_URL || "http://localhost:8000",
           changeOrigin: true,
           secure: false,
         },
