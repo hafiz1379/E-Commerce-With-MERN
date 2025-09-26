@@ -33,11 +33,23 @@ app.use(
 );
 app.use(cookieParser());
 
-// ✅ CORS configuration
+// ✅ CORS configuration (multi-origin support)
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://jade-dolphin-bc1bef.netlify.app", // Netlify frontend
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000", 
-    credentials: true, 
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
 
